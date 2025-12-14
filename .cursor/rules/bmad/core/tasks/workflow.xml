@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  BMAD CORE: Workflow Execution System
+  This is the CORE OS for executing BMAD workflows based on workflow-config YAML files
+-->
+<workflow-executor>
+  <description>
+    The workflow.xml system processes workflow-config YAML files to execute structured workflows.
+    Each workflow-config defines steps, templates, outputs, and validation rules.
+  </description>
+
+  <execution-flow>
+    <step n="1" title="Load Workflow Config">
+      <action>Read the workflow-config YAML file specified as parameter</action>
+      <action>Validate YAML structure and required fields</action>
+      <action>Parse workflow metadata (name, description, version)</action>
+    </step>
+
+    <step n="2" title="Initialize Context">
+      <action>Load project context and current state</action>
+      <action>Identify target directories for outputs</action>
+      <action>Check prerequisites and halt-conditions</action>
+    </step>
+
+    <step n="3" title="Execute Workflow Steps">
+      <action>Process each step in sequence as defined in workflow-config</action>
+      <action>For each step:
+        - Load any required templates
+        - Gather necessary information
+        - Generate outputs
+        - Save outputs immediately after generation
+        - Validate step completion
+      </action>
+      <action>Handle step dependencies and conditional execution</action>
+    </step>
+
+    <step n="4" title="Finalize Workflow">
+      <action>Validate all outputs meet requirements</action>
+      <action>Generate workflow summary and status</action>
+      <action>Update workflow tracking if applicable</action>
+    </step>
+  </execution-flow>
+
+  <validation-rules>
+    <rule>All required fields in workflow-config must be present</rule>
+    <rule>Output directories must exist or be creatable</rule>
+    <rule>Each step must complete successfully before proceeding</rule>
+    <rule>Halt immediately if halt-conditions are met</rule>
+  </validation-rules>
+
+  <halt-conditions>
+    <condition>Workflow-config file not found or invalid</condition>
+    <condition>Required dependencies missing</condition>
+    <condition>Output directory not writable</condition>
+    <condition>Critical step fails validation</condition>
+  </halt-conditions>
+
+  <output-requirements>
+    <requirement>Save outputs after EACH section when generating documents</requirement>
+    <requirement>Use relative paths for file references</requirement>
+    <requirement>Maintain consistent formatting and structure</requirement>
+  </output-requirements>
+</workflow-executor>
+

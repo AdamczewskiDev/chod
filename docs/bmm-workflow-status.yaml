@@ -1,0 +1,175 @@
+# Workflow Status Tracking
+
+generated: "2025-12-13T21:33:15Z"
+project: "chod"
+project_type: "website"
+selected_track: "bmad-method"
+field_type: "greenfield"
+workflow_path: ".bmad/bmm/workflows/workflow-status/paths/method-greenfield.yaml"
+
+workflow_status:
+  # Phase 0: Discovery (Optional)
+  - id: "brainstorm-project"
+    phase: 0
+    name: "Brainstorm Project"
+    status: "required"
+    agent: "analyst"
+    command: "brainstorm-project"
+    optional: true
+    included: true
+    note: "Creative exploration and ideation"
+
+  - id: "research"
+    phase: 0
+    name: "Research"
+    status: "completed"
+    agent: "analyst"
+    command: "research"
+    optional: true
+    included: true
+    note: "Technical/competitive analysis"
+    completed_date: "2025-12-14"
+
+  - id: "product-brief"
+    phase: 0
+    name: "Product Brief"
+    status: "completed"
+    agent: "analyst"
+    command: "product-brief"
+    optional: true
+    included: true
+    note: "Strategic product planning (recommended)"
+    completed_date: "2025-12-14"
+    output_file: "docs/analysis/product-brief-chod-2025-12-14.md"
+
+  # Phase 1: Planning
+  - id: "prd"
+    phase: 1
+    name: "Product Requirements Document"
+    status: "completed"
+    agent: "pm"
+    command: "prd"
+    optional: false
+    included: true
+    note: "Product Requirements Document with FRs and NFRs"
+    completed_date: "2025-12-14"
+    output_file: "docs/prd.md"
+
+  - id: "create-ux-design"
+    phase: 1
+    name: "UX Design"
+    status: "conditional"
+    agent: "ux-designer"
+    command: "create-ux-design"
+    optional: true
+    included: true
+    condition: "if_has_ui"
+    note: "Determined after PRD - user/agent decides if needed"
+
+  # Phase 2: Solutioning
+  - id: "create-architecture"
+    phase: 2
+    name: "Architecture"
+    status: "completed"
+    agent: "architect"
+    command: "create-architecture"
+    optional: false
+    included: true
+    note: "Complete system design for greenfield projects"
+    completed_date: "2025-12-14"
+    output_file: "docs/architecture.md"
+
+  - id: "create-epics-and-stories"
+    phase: 2
+    name: "Epics and Stories"
+    status: "completed"
+    agent: "pm"
+    command: "create-epics-and-stories"
+    optional: false
+    included: true
+    note: "Break down PRD into implementable epics and stories"
+    completed_date: "2025-12-14"
+    output_file: "docs/epics.md"
+
+  - id: "test-design"
+    phase: 2
+    name: "Test Design"
+    status: "recommended"
+    agent: "tea"
+    command: "test-design"
+    optional: true
+    included: false
+    note: "Testability assessment before gate check"
+
+  - id: "validate-architecture"
+    phase: 2
+    name: "Validate Architecture"
+    status: "optional"
+    agent: "architect"
+    command: "validate-architecture"
+    optional: true
+    included: false
+    note: "Quality check for architecture completeness"
+
+  - id: "implementation-readiness"
+    phase: 2
+    name: "Implementation Readiness"
+    status: "completed"
+    agent: "architect"
+    command: "implementation-readiness"
+    optional: false
+    included: true
+    note: "Validates PRD + Architecture + Epics + UX (optional)"
+    completed_date: "2025-12-14"
+    output_file: "docs/implementation-readiness-report-2025-12-14.md"
+
+  # Phase 3: Implementation
+  - id: "sprint-planning"
+    phase: 3
+    name: "Sprint Planning"
+    status: "completed"
+    agent: "sm"
+    command: "sprint-planning"
+    optional: false
+    included: true
+    note: "Creates sprint plan - subsequent work tracked there"
+    completed_date: "2025-12-14"
+    output_file: "docs/sprint-artifacts/sprint-1-planning.md"
+
+  - id: "code-review"
+    phase: 3
+    name: "Code Review"
+    status: "completed"
+    agent: "dev"
+    command: "code-review"
+    optional: false
+    included: true
+    note: "Code quality review after implementation"
+    completed_date: "2025-12-14"
+    output_file: "docs/code-review-report-2025-12-14.md"
+
+  - id: "retrospective"
+    phase: 3
+    name: "Sprint Retrospective"
+    status: "completed"
+    agent: "sm"
+    command: "retrospective"
+    optional: true
+    included: true
+    note: "Sprint retrospective and lessons learned"
+    completed_date: "2025-12-14"
+    output_file: "docs/retrospective-2025-12-14.md"
+
+  # Phase 4: Finalization (Post-Implementation)
+  - id: "project-finalization"
+    phase: 4
+    name: "Project Finalization"
+    status: "completed"
+    agent: "pm"
+    command: "project-finalization"
+    optional: false
+    included: true
+    note: "Final project documentation and deployment preparation"
+    completed_date: "2025-12-14"
+    output_file: "docs/FINAL-PROJECT-SUMMARY.md"
+

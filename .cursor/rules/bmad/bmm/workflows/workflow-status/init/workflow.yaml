@@ -1,0 +1,97 @@
+name: workflow-init
+description: Initialize BMAD workflow system for a project
+version: 1.0.0
+
+metadata:
+  workflow-type: initialization
+  target-project: chod
+
+prerequisites:
+  - BMAD rules installed in .cursor/rules/bmad/
+  - Project structure exists
+  - Write permissions to docs/ directory
+
+halt-conditions:
+  - BMAD rules directory not found
+  - Cannot create workflow documentation directory
+  - Project structure incomplete
+
+steps:
+  - step: 1
+    title: "Assess Project Structure"
+    description: "Review current project structure and identify workflow needs"
+    actions:
+      - "Scan project directory structure"
+      - "Identify project type and technology stack"
+      - "Review existing documentation"
+      - "Identify workflow requirements"
+    outputs:
+      - type: assessment
+        location: docs/workflow-init-assessment.md
+
+  - step: 2
+    title: "Create Workflow Directory Structure"
+    description: "Set up directories for workflow artifacts and tracking"
+    actions:
+      - "Create docs/workflows/ directory"
+      - "Create docs/workflows/active/ for current workflows"
+      - "Create docs/workflows/archive/ for completed workflows"
+      - "Create docs/workflows/templates/ for reusable templates"
+    outputs:
+      - type: directory-structure
+        location: docs/workflows/
+
+  - step: 3
+    title: "Initialize Workflow Tracking"
+    description: "Create initial workflow tracking and status files"
+    actions:
+      - "Create workflow-status.yaml for tracking active workflows"
+      - "Create workflow-index.md for workflow documentation"
+      - "Initialize workflow metadata"
+    outputs:
+      - type: tracking
+        location: docs/workflows/workflow-status.yaml
+      - type: index
+        location: docs/workflows/workflow-index.md
+
+  - step: 4
+    title: "Generate Project Context"
+    description: "Document current project state and context"
+    actions:
+      - "Analyze project structure"
+      - "Document technology stack"
+      - "Identify key components and features"
+      - "Note current development state"
+    outputs:
+      - type: context
+        location: docs/workflows/project-context.md
+
+  - step: 5
+    title: "Create Workflow Templates"
+    description: "Set up reusable workflow templates for common tasks"
+    actions:
+      - "Create sprint planning template"
+      - "Create story development template"
+      - "Create code review template"
+      - "Create retrospective template"
+    outputs:
+      - type: templates
+        location: docs/workflows/templates/
+
+validation:
+  - All directories created successfully
+  - All output files generated
+  - Workflow tracking initialized
+  - Project context documented
+
+output-format:
+  markdown: true
+  yaml: true
+  structure:
+    - assessment
+    - directory-structure
+    - tracking
+    - index
+    - context
+    - templates
+
