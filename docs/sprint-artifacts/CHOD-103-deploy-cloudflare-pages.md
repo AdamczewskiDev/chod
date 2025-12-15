@@ -27,7 +27,8 @@ Skonfigurować automatyczny deploy aplikacji Next.js na Cloudflare Pages z integ
 1. **.github/workflows/deploy-cloudflare.yml** (ZMODYFIKOWANY)
 
    - GitHub Actions workflow dla automatycznego deployu
-   - Build i deploy na Cloudflare Pages
+   - Podzielony na dwa joby: `test` (dla wszystkich triggerów) i `deploy` (tylko dla push do main)
+   - Walidacja secrets tylko dla deploy job (nie dla PR - fix dla forked repositories)
    - Automatyczne uruchamianie testów przed deployem
 
 2. **wrangler.toml** (NOWY)
@@ -156,7 +157,7 @@ Skonfigurować automatyczny deploy aplikacji Next.js na Cloudflare Pages z integ
 - [x] [AI-Review][HIGH] Naprawiono build output directory - zmieniono z `.next` na `.open-next/assets` dla OpenNext adapter
 - [x] [AI-Review][HIGH] Zainstalowano i skonfigurowano OpenNext Cloudflare adapter (`@opennextjs/cloudflare`)
 - [x] [AI-Review][MEDIUM] Usunięto `continue-on-error: true` z testów - deploy nie wykona się jeśli testy failują
-- [x] [AI-Review][MEDIUM] Dodano walidację GitHub Secrets przed deployem
+- [x] [AI-Review][MEDIUM] Dodano walidację GitHub Secrets przed deployem (tylko dla push do main, nie dla PR)
 - [x] [AI-Review][MEDIUM] Naprawiono detekcję Cloudflare Pages environment (usunięto nieprawidłowy check `CF_PAGES === "1"`)
 - [x] [AI-Review][MEDIUM] Naprawiono status inconsistency w story file
 - [x] [AI-Review][LOW] Zaktualizowano README.md z poprawnymi build settings dla OpenNext
@@ -167,12 +168,13 @@ Skonfigurować automatyczny deploy aplikacji Next.js na Cloudflare Pages z integ
 
 - ✅ Build output directory: `.next` → `.open-next/assets`
 - ✅ Workflow używa `npx @opennextjs/cloudflare build` zamiast `npm run build`
-- ✅ Dodano walidację secrets przed deployem
+- ✅ Dodano walidację secrets przed deployem (tylko dla push do main, nie dla PR - fix dla forked repositories)
 - ✅ Testy muszą przejść przed deployem (usunięto `continue-on-error`)
 - ✅ Zaktualizowano `wrangler.toml` z poprawnym output directory (`.open-next/assets`)
 - ✅ Utworzono `open-next.config.ts` dla OpenNext adapter
 - ✅ Zaktualizowano README.md z poprawnymi build settings (`npx @opennextjs/cloudflare build`, `.open-next/assets`)
 - ✅ Naprawiono detekcję Cloudflare Pages environment (usunięto nieprawidłowy `CF_PAGES === "1"` check)
+- ✅ Naprawiono workflow - podzielono na `test` i `deploy` joby (walidacja secrets tylko dla deploy, nie dla PR)
 
 **Remaining Manual Steps (Action Items):**
 
