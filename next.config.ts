@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
+    // Cloudflare Pages compatibility - images are optimized by Cloudflare CDN
+    unoptimized: true,
   },
   // Optymalizacja cache
   async headers() {

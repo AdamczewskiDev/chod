@@ -1,0 +1,58 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to Cloudflare Pages
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate GitHub Secrets
+        run: |
+          if [ -z "${{ secrets.CLOUDFLARE_API_TOKEN }}" ]; then
+            echo "❌ Error: CLOUDFLARE_API_TOKEN secret is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ]; then
+            echo "❌ Error: CLOUDFLARE_ACCOUNT_ID secret is not set"
+            exit 1
+          fi
+          echo "✅ GitHub Secrets validated"
+
+      - name: Run tests
+        run: npm run test:run
+
+      - name: Build Next.js with Cloudflare adapter
+        run: npx @opennextjs/cloudflare build
+        env:
+          NODE_ENV: production
+          # Build-time env vars (if needed)
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL || 'https://chod.pages.dev' }}
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: chod
+          directory: .open-next/assets
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

@@ -57,14 +57,26 @@ Skonfigurować Resend API dla wysyłki emaili z formularza kontaktowego.
 - [x] Build przechodzi bez błędów
 - [ ] Test wysyłki email (wymaga RESEND_API_KEY)
 
+### Unit Tests
+- [x] Testy dla `createContactEmailTemplate` (app/lib/__tests__/resend.test.ts)
+- [x] Testy dla HTML escaping
+- [x] Testy dla edge cases (puste pola, długie teksty)
+
 ### Next Steps
 - Story CHOD-102: Integracja z API Route
+
+## Code Review Fixes (2025-12-14)
+
+### Fixed Issues
+- ✅ **HIGH:** Utworzono `.env.example` z pełną dokumentacją env vars
+- ✅ Dodano testy jednostkowe dla email template helper
 
 ## Notes
 
 - Resend client jest gotowy do użycia
 - W development, jeśli API key nie jest ustawiony, system loguje do konsoli
 - W production, brak API key zwróci błąd
+- `.env.example` zawiera pełną dokumentację wszystkich wymaganych zmiennych
 
 ---
 

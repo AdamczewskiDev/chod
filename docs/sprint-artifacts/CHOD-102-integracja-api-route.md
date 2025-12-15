@@ -58,6 +58,13 @@ Zintegrować Resend z istniejącym API route `/api/contact` aby formularz rzeczy
 - [x] TypeScript: 0 błędów
 - [ ] Test wysyłki email (wymaga RESEND_API_KEY w .env.local)
 
+### Unit Tests
+- [x] Testy walidacji pól (app/api/contact/__tests__/route.test.ts)
+- [x] Testy walidacji długości pól (name: 100, email: 254, phone: 20, message: 5000)
+- [x] Testy rate limiting (5 requestów/minutę)
+- [x] Testy error handling
+- [x] Testy input sanitization
+
 ### Test Instructions
 
 1. Utwórz `.env.local` z `RESEND_API_KEY=re_xxxxx`
@@ -65,12 +72,28 @@ Zintegrować Resend z istniejącym API route `/api/contact` aby formularz rzeczy
 3. Sprawdź czy email przychodzi do `CONTACT_EMAIL`
 4. Sprawdź czy użytkownik widzi potwierdzenie
 
+## Code Review Fixes (2025-12-14)
+
+### Fixed Issues
+- ✅ **HIGH:** Zmieniono default email z `chlopakioddzwieku@gmail.com` na `kontakt@chod.pl`
+- ✅ **MEDIUM:** Poprawiono rate limiting - dodano TTL cleanup aby zapobiec memory leak
+- ✅ **MEDIUM:** Dodano walidację długości pól (zapobieganie DoS i spam)
+- ✅ **HIGH:** Dodano testy jednostkowe dla route.ts (walidacja, rate limiting, error handling)
+- ✅ **LOW:** Console.log pozostają warunkowe (tylko w development) - zgodnie z AC
+
+### Technical Improvements
+- Rate limiting: Dodano automatyczne czyszczenie wygasłych wpisów co 5 minut
+- Walidacja: Dodano limity długości dla wszystkich pól formularza
+- Testy: Pełne pokrycie testowe dla route.ts i resend.ts
+
 ## Notes
 
 - W development, jeśli `RESEND_API_KEY` nie jest ustawiony, system loguje do konsoli z ostrzeżeniem
 - W production, brak `RESEND_API_KEY` zwróci błąd 500
 - Email template jest responsywny i profesjonalny
 - Wszystkie dane są HTML-escaped dla bezpieczeństwa
+- Rate limiting używa in-memory store z TTL cleanup (dla multi-instance użyj Redis)
+- Default email: `kontakt@chod.pl` (zgodnie z wymaganiami)
 
 ---
 

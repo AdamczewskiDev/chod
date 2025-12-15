@@ -98,3 +98,7 @@ development_status:
   7-2-code-splitting-fast-loading: done
   7-3-font-optimization: done
   epic-7-retrospective: completed
+
+  # Epic 8: Deployment & Infrastructure
+  epic-8: in-progress
+  CHOD-103-deploy-cloudflare-pages: review
